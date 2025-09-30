@@ -38,7 +38,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
             ),
             const SizedBox(height: 16),
 
-            // Nama
+            
             Text(
               widget.menuItem.name,
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
