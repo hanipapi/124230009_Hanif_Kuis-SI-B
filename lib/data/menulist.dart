@@ -25,4 +25,10 @@ List<MenuItem> menuList = [
      imageAsset: "assets/gp25.jpg",
     description: 'game balap moto.',
   ),
+  MenuItem(
+    name: 'Moto GP 2025',
+    price: 10000,
+     imageAsset: "assets/gp25.jpg",
+    description: 'game balap moto.',
+  ),
 ];

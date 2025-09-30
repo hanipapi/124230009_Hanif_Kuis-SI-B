@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:latihanquiz/models/modeldata.dart';
+import 'package:latihanquiz/likebtn.dart';
 
 // Halaman detail pesanan
 class OrderDetailPage extends StatefulWidget {
@@ -11,6 +12,9 @@ class OrderDetailPage extends StatefulWidget {
 }
 
 class _OrderDetailPageState extends State<OrderDetailPage> {
+  int _likeCount = 0;
+  bool _isLiked =
+      false; // Untuk melacak apakah pengguna sudah menyukai postingan
   int get price => widget.menuItem.price;
 
   @override
@@ -38,7 +42,6 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
             ),
             const SizedBox(height: 16),
 
-            
             Text(
               widget.menuItem.name,
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -55,6 +58,14 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
             ),
             const SizedBox(height: 16),
 
+            
+            Column(
+              children: [
+                // Widget lain
+                LikeButtonWidget(),
+                // Widget lain
+              ],
+            ),
             // Deskirpsi
             Text(
               widget.menuItem.description,

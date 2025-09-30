@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:latihanquiz/data/menulist.dart'; 
-import 'package:latihanquiz/models/modeldata.dart'; 
-import 'orderdetailpage.dart'; 
-import 'package:latihanquiz/login_page.dart'; 
+import 'package:latihanquiz/data/menulist.dart';
+import 'package:latihanquiz/models/modeldata.dart';
+import 'orderdetailpage.dart';
+import 'package:latihanquiz/login_page.dart';
+import 'package:latihanquiz/likebtn.dart';
 
-
+int _likeCount = 0;
+bool _isLiked = false; // Untuk melacak apakah pengguna sudah menyukai postinga
 
 class Homepage extends StatelessWidget {
-  final String username; 
+  final String username;
 
   const Homepage({super.key, required this.username});
 
@@ -17,7 +19,7 @@ class Homepage extends StatelessWidget {
       // Struktur utama halaman
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        centerTitle: true, 
+        centerTitle: true,
         title: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -35,7 +37,6 @@ class Homepage extends StatelessWidget {
                 color: Colors.white70,
               ),
             ),
-           
           ],
         ),
         actions: [
@@ -53,50 +54,44 @@ class Homepage extends StatelessWidget {
         ],
       ),
 
-
-
-
       // Isi halaman
-      
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             const SizedBox(height: 12),
- SearchAnchor(
-            builder: (BuildContext context, SearchController controller) {
-              return SearchBar(
-                controller: controller,
-                padding: const WidgetStatePropertyAll<EdgeInsets>(
-                  EdgeInsets.symmetric(horizontal: 16.0),
-                ),
-                onTap: () {
-                  controller.openView();
-                },
-                onChanged: (_) {
-                  controller.openView();
-                },
-                leading: const Icon(Icons.search),
-                trailing: <Widget>[
-              
-                ],
-              );
-            },
-            suggestionsBuilder: (BuildContext context, SearchController controller) {
-              return List<ListTile>.generate(5, (int index) {
-                final String item = 'item $index';
-                return ListTile(
-                  title: Text(item),
+            SearchAnchor(
+              builder: (BuildContext context, SearchController controller) {
+                return SearchBar(
+                  controller: controller,
+                  padding: const WidgetStatePropertyAll<EdgeInsets>(
+                    EdgeInsets.symmetric(horizontal: 16.0),
+                  ),
                   onTap: () {
-                    (() {
-                      controller.closeView(item);
+                    controller.openView();
+                  },
+                  onChanged: (_) {
+                    controller.openView();
+                  },
+                  leading: const Icon(Icons.search),
+                  trailing: <Widget>[],
+                );
+              },
+              suggestionsBuilder:
+                  (BuildContext context, SearchController controller) {
+                    return List<ListTile>.generate(5, (int index) {
+                      final String item = 'item $index';
+                      return ListTile(
+                        title: Text(item),
+                        onTap: () {
+                          (() {
+                            controller.closeView(item);
+                          });
+                        },
+                      );
                     });
                   },
-                );
-              });
-            },
-          ),
+            ),
             // Judul "Daftar Menu"
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -112,7 +107,8 @@ class Homepage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: GridView.builder(
-                physics: const NeverScrollableScrollPhysics(), // Scroll ikut SingleChildScrollView
+                physics:
+                    const NeverScrollableScrollPhysics(), // Scroll ikut SingleChildScrollView
                 shrinkWrap: true, // Biar grid menyesuaikan ukuran
                 itemCount: menuList.length, // Jumlah item menu
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -162,7 +158,7 @@ class Homepage extends StatelessWidget {
                               ),
                               const SizedBox(height: 4),
 
-                               // deskrisi
+                              // deskrisi
                               Text(
                                 item.description,
                                 style: const TextStyle(
@@ -174,14 +170,20 @@ class Homepage extends StatelessWidget {
 
                               // like menu
                               Text(
-                                "Like ${item.price}",
+                                "Like Terkahir ${item.price}",
                                 style: const TextStyle(
                                   fontSize: 14,
                                   color: Colors.redAccent,
                                 ),
                               ),
                               const SizedBox(height: 8),
-
+                              Column(
+                                children: [
+                                  // Widget lain
+                                  LikeButtonWidget(),
+                                  // Widget lain
+                                ],
+                              ),
                               // Tombol selengkapnya
                               SizedBox(
                                 width: double.infinity,
